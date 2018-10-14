@@ -30,9 +30,20 @@ data "aws_iam_policy_document" "instance_metrics_policy" {
     actions = [
       "ec2:DescribeInstances",
       "ec2:DescribeReservedInstances",
+      "ec2:DescribeRegions",
       "cloudwatch:PutMetricData",
     ]
 
     resources = ["*"]
   }
+  statement {
+    actions = [
+      "logs:CreateLogGroup",
+      "logs:CreateLogStream",
+      "logs:PutLogEvents",
+    ]
+
+    resources = ["arn:aws:logs:*:*:*"]
+  }
+
 }

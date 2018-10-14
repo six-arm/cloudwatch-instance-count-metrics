@@ -5,6 +5,7 @@ resource "aws_lambda_function" "instance_metrics" {
   role = "${aws_iam_role.instance_metrics.arn}"
   runtime = "python3.6"
   source_code_hash = "${data.archive_file.instance_metrics_source.output_base64sha256}"
+  timeout = 120
 }
 
 resource "aws_lambda_permission" "instance_metrics" {
@@ -30,7 +31,7 @@ data "archive_file" "instance_metrics_source" {
   output_path = "${path.module}/src/lambda.zip"
 
   source {
-    content  = "${file("${path.module}/src/lambda.py")}"
+    content  = "${file("${path.module}/src/all_region_count.py")}"
     filename = "lambda.py"
   }
 }
